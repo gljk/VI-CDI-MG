@@ -37,7 +37,8 @@ labels <- sprintf(
   round(Serbia_leaflet@data$YPLLSARS,0)
   
 ) %>% lapply(htmltools::HTML)
-
+load("koMunicipalities")
+kosovo <- raster::aggregate(koMunicipalities)
 
 leaflet(options = leafletOptions(zoomControl = FALSE)) %>%
   addPolygons(data=Serbia_leaflet,
@@ -57,7 +58,8 @@ leaflet(options = leafletOptions(zoomControl = FALSE)) %>%
               labelOptions = labelOptions(
                 style = list("font-weight" = "normal","background-color"="#0C0C0C", color="#f0f0f0", "line-height"="10px", padding = "5px 5px"),
                 textsize = "11px",
-                direction = "auto")) %>% addLegend(pal = pal, values = Serbia_leaflet@data$YPLLi17_19, opacity = 0.7,title = "Br. godina na 100000 st. <75",
+                direction = "auto")) %>% 
+  addPolygons(data=kosovo,weight = 1, fillOpacity = 1, opacity = 1,color = "#bdbdbd")  %>% addLegend(pal = pal, values = Serbia_leaflet@data$YPLLi17_19, opacity = 0.7,title = "Br. godina na 100000 st. <75",
                                                      position = "topright")
 
 
